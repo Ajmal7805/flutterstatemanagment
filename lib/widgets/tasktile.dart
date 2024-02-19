@@ -2,20 +2,31 @@
 
 import 'package:flutter/material.dart';
 
-class ListTilemodal extends StatelessWidget {
+class TaskTile extends StatelessWidget {
+  final bool? isckecked;
+  final String? taskTitle;
+  final Function checkboxcallback;
+  const TaskTile(
+      {super.key,
+      this.isckecked,
+      this.taskTitle,
+      required this.checkboxcallback});
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text(
-        'This is a task',
-        style: TextStyle(
-          fontSize: 15,
+        leading: Text(
+          taskTitle!,
+          style: TextStyle(
+            decoration: isckecked == true ? TextDecoration.lineThrough : null,
+            fontSize: 15,
+          ),
         ),
-      ),
-      trailing: Checkbox(
-        value: false,
-        onChanged: (value) {},
-      ),
-    );
+        trailing: Checkbox(
+          value: isckecked,
+          onChanged: (value) {
+            checkboxcallback(value);
+          },
+        ));
   }
 }

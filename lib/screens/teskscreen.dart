@@ -1,22 +1,28 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutterstatemanagment/modal/task_data.dart';
+import 'package:flutterstatemanagment/screens/add_taskscreen.dart';
 import 'package:flutterstatemanagment/widgets/taskList.dart';
+import 'package:provider/provider.dart';
 
-class TaskScreen extends StatefulWidget {
-  const TaskScreen({super.key});
-
-  @override
-  State<TaskScreen> createState() => _TaskScreenState();
-}
-
-class _TaskScreenState extends State<TaskScreen> {
+class TaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet<void>(
+            isScrollControlled: false,
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: Addscreen());
+            },
+          );
+        },
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(
           Icons.add,
@@ -32,6 +38,7 @@ class _TaskScreenState extends State<TaskScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
+                  backgroundColor: Colors.white,
                   radius: 30,
                   child: Icon(
                     color: Colors.lightBlueAccent,
@@ -50,7 +57,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '12 Tasks',
+                  '${Provider.of<Taskdata>(context).taskcount} Tasks',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ],
